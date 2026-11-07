@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="Animation Studio">
+  <title>Animation Studio</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#141d33"/>
+      <stop offset="1" stop-color="#05070d"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1b2942"/>
+      <stop offset="1" stop-color="#0b1322"/>
+    </linearGradient>
+    <linearGradient id="edge" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#22d3ee"/>
+      <stop offset="0.55" stop-color="#4f7cf7"/>
+      <stop offset="1" stop-color="#a78bfa"/>
+    </linearGradient>
+    <linearGradient id="play" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#22d3ee"/>
+      <stop offset="0.5" stop-color="#5b8def"/>
+      <stop offset="1" stop-color="#a78bfa"/>
+    </linearGradient>
+    <radialGradient id="halo" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#5b8def" stop-opacity="0.42"/>
+      <stop offset="0.62" stop-color="#6366f1" stop-opacity="0.12"/>
+      <stop offset="1" stop-color="#6366f1" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="512" height="512" rx="116" fill="url(#bg)"/>
+  <rect x="7" y="7" width="498" height="498" rx="110" fill="none" stroke="#ffffff" stroke-opacity="0.07" stroke-width="2"/>
+
+  <circle cx="256" cy="256" r="186" fill="url(#halo)"/>
+
+  <rect x="88" y="132" width="336" height="248" rx="46" fill="url(#panel)"/>
+  <rect x="88" y="132" width="336" height="248" rx="46" fill="none" stroke="url(#edge)" stroke-opacity="0.85" stroke-width="6"/>
+
+  <g fill="url(#edge)" fill-opacity="0.55">
+    <rect x="116" y="170" width="26" height="36" rx="10"/>
+    <rect x="116" y="238" width="26" height="36" rx="10"/>
+    <rect x="116" y="306" width="26" height="36" rx="10"/>
+    <rect x="370" y="170" width="26" height="36" rx="10"/>
+    <rect x="370" y="238" width="26" height="36" rx="10"/>
+    <rect x="370" y="306" width="26" height="36" rx="10"/>
+  </g>
+
+  <path
+    d="M212 196 L338 256 L212 316 Z"
+    fill="url(#play)"
+    stroke="url(#play)"
+    stroke-width="18"
+    stroke-linejoin="round"
+    stroke-linecap="round"
+  />
+</svg>

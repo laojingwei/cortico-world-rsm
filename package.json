@@ -1,0 +1,75 @@
+{
+  "name": "cortico-world-rsm",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "将 remotion-studio-mcp 接入 Coopanion：支持从 npm 安装与更新动画工程、启停本机服务，并通过四个门面工具调用其完整 MCP 能力。以后你的大肥鱼就能帮你生成动画视频了。",
+  "author": "xww",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/laojingwei/cortico-world-rsm.git"
+  },
+  "homepage": "https://github.com/laojingwei/cortico-world-rsm#readme",
+  "bugs": {
+    "url": "https://github.com/laojingwei/cortico-world-rsm/issues"
+  },
+  "keywords": [
+    "cortico-world",
+    "cortico",
+    "coopanion",
+    "remotion",
+    "remotion-studio",
+    "mcp",
+    "video",
+    "animation"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "main": "./src/index.mjs",
+  "exports": {
+    ".": "./src/index.mjs"
+  },
+  "files": [
+    "src",
+    "dist",
+    "assets",
+    "scripts",
+    "describe.json",
+    "CHANGELOG.md"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "dependencies": {},
+  "scripts": {
+    "smoke": "node scripts/smoke.mjs",
+    "smoke:live": "node scripts/smoke.mjs --live",
+    "describe": "node scripts/smoke.mjs --write-describe",
+    "prepublishOnly": "node scripts/smoke.mjs"
+  },
+  "cortico": {
+    "kind": "world",
+    "api": 6,
+    "displayName": "动画工作台",
+    "icon": "assets/icon.svg",
+    "webUiClient": "dist/webui.js",
+    "describe": "describe.json",
+    "tags": [
+      "video",
+      "creative",
+      "external-setup"
+    ],
+    "locales": {
+      "zh": {
+        "displayName": "动画工作台",
+        "description": "为 Coopanion 提供 Remotion Studio 集成能力：首次使用可从 npm 下载工程并安装依赖，此后可启动或停止本机服务、查看运行日志、检查与更新工程版本。创作能力经四个门面工具（开工指南 / 读取指南 / 检索工具 / 调用工具）按需加载，避免将大量工具定义注入对话上下文。"
+      },
+      "en": {
+        "displayName": "Animation Studio",
+        "description": "Integrates Remotion Studio with Coopanion. On first use it downloads the project from npm and installs dependencies; thereafter it starts or stops the local service, reads logs, and checks or updates the project version. The full tool surface is reached through four facade tools (start guide / read guide / search tool / call tool), so hundreds of tool definitions are never injected into the conversation context."
+      }
+    }
+  }
+}

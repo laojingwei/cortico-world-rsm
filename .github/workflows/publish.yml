@@ -1,0 +1,36 @@
+name: Publish
+
+# 手动触发：仓库 Secrets 中需配置 NPM_TOKEN（npm Automation Token）。
+# 发布前会先跑一次离线自检，失败则不发布。
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: npm dist-tag
+        required: true
+        default: latest
+        type: choice
+        options: [latest, next]
+
+permissions:
+  contents: read
+  id-token: write # 供 npm provenance 使用
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+
+      - name: 离线自检
+        run: node scripts/smoke.mjs
+
+      - name: 发布到 npm
+        run: npm publish --tag "${{ inputs.tag }}" --access public --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

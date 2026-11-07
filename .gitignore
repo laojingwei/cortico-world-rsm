@@ -1,0 +1,16 @@
+# 依赖：本扩展零运行时依赖，出现 node_modules 只可能是本地调试产物
+node_modules/
+
+# 日志与临时文件
+*.log
+*.tgz
+.tmp/
+.temp/
+
+# 编辑器与操作系统
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# 注意：dist/ 是本扩展分发的前端产物（cortico.webUiClient 指向 dist/webui.js），必须提交

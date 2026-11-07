@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    name: 自检（${{ matrix.os }} / Node ${{ matrix.node }}）
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        node: [22, 24]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: 离线自检
+        run: node scripts/smoke.mjs
+
+      - name: describe.json 与工具声明保持一致
+        shell: bash
+        run: |
+          node scripts/smoke.mjs --write-describe > /dev/null
+          git diff --exit-code -- describe.json \
+            || { echo "describe.json 与 tools() 声明不一致，请本地执行 npm run describe 后提交"; exit 1; }
+
+      - name: 检查发布包内容
+        run: npm pack --dry-run
