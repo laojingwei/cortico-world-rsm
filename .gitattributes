@@ -1,0 +1,11 @@
+# 统一按 LF 检出：ENV_PROMPT.md 的正文会被写进 describe.json，
+# 若检出为 CRLF，describe.json 就会与运行时生成的结果不一致（CI 会失败）。
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.zip binary
+*.tgz binary

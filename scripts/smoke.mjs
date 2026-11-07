@@ -958,6 +958,10 @@ async function main() {
       'Windows 下服务进程不得使用 detached（会新建控制台窗口）');
     const ui = readFileSync(join(PACKAGE_DIR, 'dist/webui.js'), 'utf8');
     assert.equal((ui.match(/configDesc:/g) ?? []).length, 2, '中英文案必须同步维护');
+
+    // ENV_PROMPT.md 的正文会写进 describe.json：CRLF 检出会让两者不一致（CI 上最容易踩）
+    const prompt = readFileSync(join(PACKAGE_DIR, 'src/ENV_PROMPT.md'), 'utf8');
+    assert.ok(!prompt.includes('\r'), 'ENV_PROMPT.md 必须是 LF 换行，否则 describe.json 与运行时不一致（.gitattributes 已固定 eol=lf）');
   });
 
   await test('控制台面板布局：常用配置在操作之前，按钮分组且数量收敛', () => {
