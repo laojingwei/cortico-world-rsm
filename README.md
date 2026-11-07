@@ -122,7 +122,23 @@ npm run smoke:live   # 追加真实 registry 与本机 /mcp 的联调
 npm run describe     # 重新生成 describe.json
 ```
 
-自检覆盖扩展清单契约、配置组与默认值一致性、World 干装载、tarball 解析（含 PAX 与路径穿越防护）、合并保留规则、端口联动、JSON-RPC 往返与错误映射、构建命令解析、pnpm 参数、面板结构与交互、运行时自检等 25 项。
+自检覆盖扩展清单契约、配置组与默认值一致性、World 干装载、tarball 解析（含 PAX 与路径穿越防护）、合并保留规则、端口联动、JSON-RPC 往返与错误映射、构建命令解析、pnpm 参数、依赖脚本代跑、写入确认闸口、面板结构与交互、运行时自检等 28 项。
+
+## 发布
+
+打标签即发布，认证走 npm Trusted Publishing（OIDC），仓库中不需要保存任何 npm token。
+
+```bash
+# 1. 同步修改 package.json 的 version 与 CHANGELOG
+# 2. 提交并打标签（标签名必须与 version 一致，工作流会校验）
+git commit -am "chore: 1.0.2"
+git tag v1.0.2
+git push origin main --tags
+```
+
+`.github/workflows/publish.yml` 依次执行：版本一致性校验 → 离线自检 → `npm publish`，并在 npm 生成 provenance 证明。也可在 Actions 页手动触发，用于补发或指定 `next` dist-tag。
+
+首次启用前需在 npm 包的 Settings → Trusted publishing 绑定本仓库（`laojingwei` / `cortico-world-rsm` / `publish.yml`）。
 
 ## 目录结构
 

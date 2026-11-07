@@ -1,6 +1,6 @@
 {
   "name": "cortico-world-rsm",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "description": "将 remotion-studio-mcp 接入 Coopanion：支持从 npm 安装与更新动画工程、启停本机服务，并通过四个门面工具调用其完整 MCP 能力。以后你的大肥鱼就能帮你生成动画视频了。",
   "author": "xww",

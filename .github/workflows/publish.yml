@@ -1,8 +1,10 @@
 name: Publish
 
-# 手动触发：仓库 Secrets 中需配置 NPM_TOKEN（npm Automation Token）。
-# 发布前会先跑一次离线自检，失败则不发布。
+# 打标签即发布：git tag v1.0.1 && git push origin v1.0.1
+# 认证走 npm Trusted Publishing（OIDC），仓库中不保存任何 npm token。
 on:
+  push:
+    tags: ['v*']
   workflow_dispatch:
     inputs:
       tag:
@@ -14,7 +16,7 @@ on:
 
 permissions:
   contents: read
-  id-token: write # 供 npm provenance 使用
+  id-token: write # OIDC：向 npm 换取短时发布凭据，无需长期 token
 
 jobs:
   publish:
@@ -24,13 +26,27 @@ jobs:
 
       - uses: actions/setup-node@v7
         with:
-          node-version: 22
-          registry-url: https://registry.npmjs.org
+          node-version: 24
+
+      - name: 确保 npm CLI 支持 Trusted Publishing
+        run: |
+          npm install -g npm@11
+          node -v
+          npm -v
+
+      - name: 标签与 package.json 版本必须一致
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          version="$(node -p "require('./package.json').version")"
+          tag="${GITHUB_REF_NAME#v}"
+          echo "package.json=$version tag=$GITHUB_REF_NAME"
+          if [ "$tag" != "$version" ]; then
+            echo "::error::标签 $GITHUB_REF_NAME 与 package.json 的版本 $version 不一致，发布已中止"
+            exit 1
+          fi
 
       - name: 离线自检
         run: node scripts/smoke.mjs
 
       - name: 发布到 npm
-        run: npm publish --tag "${{ inputs.tag }}" --access public --provenance
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish --tag "${{ inputs.tag || 'latest' }}" --access public
